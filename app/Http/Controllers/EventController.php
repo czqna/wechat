@@ -15,15 +15,30 @@ class EventController extends Controller
     }
 	public function index(Request $request){
 		$access_token=$this->wechat->access_token();
-		dd($access_token);
-		// $r=json_decode($access_token,1);
-		// dd($r);
-		$data=[
-			'access_token'=>$access_token,
-		];
-		$re=DB::table('wechat')->insert($data);
-		dd($re);
+	
+	$info=file_get_contents("https://api.weixin.qq.com/cgi-bin/user/get?access_token=$access_token&next_openid=");
+		// dd($info);
+		$in=json_decode($info,1);
+		$info=[];
+		// dd($info);
+		foreach ($in['data']['openid'] as $k => $v) {
+		$opid=file_get_contents("https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$v&lang=zh_CN");
+		$info[]=json_decode($opid,1);
+		// dd($info);
+		// $data=[
+		// 		'openid'=>$re['openid'],
+		// 		'city'=>$re['city'],
+		// 		'nickname'=>$re['nickname'],
+		// 		'headimgurl'=>$re['headimgurl']
+		// ];
+		// $res=DB::table('wechat')->insert($data);
 		
+	
+			}
+			// dd($info);
+		return view('wechat.index',['info'=>$info]);
+			
 	}
+
   
 }

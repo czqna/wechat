@@ -15,4 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/event/index','EventController@index');
+Route::get('/wechat/index','EventController@index');
+// Route::get('/wechat/doindex','EventController@doindex');
+
