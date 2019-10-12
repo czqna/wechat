@@ -17,7 +17,7 @@
 	<tr>
 		<td><img src="{{$v['headimgurl']}}"></td>
 		<td>{{$v['nickname']}}</td>
-		<td>{{$v['openid']}}</td>
+		<td>{{$v['city']}}</td>
 		<td>{{$v['openid']}}</td>
 		
 	</tr>
