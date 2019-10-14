@@ -33,11 +33,11 @@ class EventController extends Controller
 		// ];
 		// $res=DB::table('wechat')->insert($data);
 		
-	
+
 			}
-			// dd($info);
-			
-		return view('wechat.index',['info'=>$info]);
+
+		$req=$request->all();
+		return view('wechat.index',['info'=>$info,'req'=>$req]);
 			
 	}
 	//登陆显示页面
@@ -170,7 +170,45 @@ class EventController extends Controller
   public function label_index(Request $request){
   		$req=$request->all();
   		// dd($req);
+  		$url="https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=".$this->wechat->access_token();
+  		$data=[
+  			   
+			    "openid_list" => $req['openid_list'],  
+			    "tagid" =>$req['id']
+			  
 
+  		];
+  		$d=$this->wechat->curl_post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
+  		$res=json_decode($d,1);
+  		dd($res);
+  }
+  //获取用户所在的标签
+  public function label_user(Request $request){
+  		$req=$request->all();
+  		// dd($req);
+  		$url='https://api.weixin.qq.com/cgi-bin/tags/getidlist?access_token='.$this->wechat->access_token();
+  		$data=[
+  			  "openid" => $req['openid']
+  		];
+  		$d=$this->wechat->curl_post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
+  		$res=json_decode($d,1);
+  		// dd($res);
+  		$requt=$this->wechat->label_lists()['tags'];
+
+  		foreach ($res['tagid_list'] as $v) {
+  			// dd($v);
+  			foreach ($requt as $vo) {
+  				// dd($vo);
+  				if ($v == $vo['id']) {
+
+  					echo $vo['name']."<br>";
+  				}
+  			}
+  		}
+  	
+  }
+  public function event(){
+  		 echo $_GET['echostr'];
   }
 
 }

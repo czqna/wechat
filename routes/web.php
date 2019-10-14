@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::any('wechat/event','EventController@event');
+
+
 
 Route::get('/wechat/index','EventController@index');
 // Route::get('/wechat/doindex','EventController@doindex');
@@ -28,5 +31,7 @@ Route::get('/wechat/label_list','EventController@label_list');
 Route::get('/wechat/label_del','EventController@label_del');
 Route::get('/wechat/label_update','EventController@label_update');
 Route::post('/wechat/do_update','EventController@do_update');
-Route::get('/wechat/label_index','EventController@label_index');
+Route::post('/wechat/label_index','EventController@label_index');
+Route::get('/wechat/label_user','EventController@label_user');
+
 

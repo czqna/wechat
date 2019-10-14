@@ -5,13 +5,27 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 class Wechat{
+	//标签列表
+	  public function label_lists(){
+
+  		$data='https://api.weixin.qq.com/cgi-bin/tags/get?access_token='.$this->access_token();
+  		// dd($data);
+  		// 
+  		$d=$this->curl_get($data);
+  		// dd($d);
+  		$do=json_decode($d,1);
+  		// dd($do);
+  		return $do;
+  }
 
  public function access_token(){
 
    	if (Cache::has('access_token_key')) {
    		//有的话去缓存拿
+   		// dd(Cache::has('access_token_key'));
   		$access_token=Cache::get('access_token_key');
   		// echo $access_token;
+  		
    	}else{
    		//没有通过微信接口拿
    		$access_toke=file_get_contents("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".env('WECHAT_APPID')."&secret=".env('WECHAT_APPSECRET'));
