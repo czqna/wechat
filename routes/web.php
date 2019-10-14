@@ -20,7 +20,7 @@ Route::any('wechat/event','EventController@event');
 
 Route::get('/wechat/index','EventController@index');
 // Route::get('/wechat/doindex','EventController@doindex');
-Route::get('/wechat/event','EventController@event');
+Route::get('/wechat/event1','EventController@event1');
 Route::get('/wechat/code','EventController@code');
 Route::get('/wechat/login','EventController@login');
 Route::get('/wechat/curl','EventController@curl');

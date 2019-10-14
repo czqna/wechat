@@ -44,7 +44,7 @@ class EventController extends Controller
 	public function login(){
 		return view('wechat.login');
 	}
-  	public function event(){
+  	public function event1(){
   
   		$redirect_uri=urlencode(env('APP_URL').'/wechat/code');
   		$url= 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('WECHAT_APPID').'&redirect_uri='.$redirect_uri.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect  ';
