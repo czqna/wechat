@@ -16,7 +16,7 @@ class EventController extends Controller
 	public function index(Request $request){
 		$access_token=$this->wechat->access_token();
 	
-	$info=file_get_contents("https://api.weixin.qq.com/cgi-bin/user/get?access_token=$access_token&next_openid=");
+		$info=file_get_contents("https://api.weixin.qq.com/cgi-bin/user/get?access_token=$access_token&next_openid=");
 		// dd($info);
 		$in=json_decode($info,1);
 		$info=[];
@@ -208,6 +208,8 @@ class EventController extends Controller
   	
   }
   public function event(){
+
+ 
   		$info=file_get_contents("php://input");
   		//吧接受微信的xml数据存入日志
   		file_put_contents(storage_path('logs/wechat/'.date('Y-m-d').'.log'),"<<<<<<<<<<<<<<<<<<\n",FILE_APPEND);
@@ -215,7 +217,22 @@ class EventController extends Controller
   		//解析xml
   		$xml_obj=simplexml_load_string($info,'SimpleXMLELement',LIBXML_NOCDATA);
   		$xml_arr=(array)$xml_obj;
-  		echo "<xml>
+  		$req=$this->wechat->get_wechat_user($xml_arr['FromUserName']);
+
+  		if ($xml_arr['MsgType']=='event' && $xml_arr['MsgType']=='MsgType') {
+  			$msg=你好.$req['nickname'].欢迎关注本公众号;
+  				echo "<xml>
+		  <ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
+		  <FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
+		  <CreateTime>".time()."</CreateTime>
+		  <MsgType><![CDATA[text]]></MsgType>
+		  <Content><![CDATA[".$msg."]]></Content>
+		</xml>
+				";
+	
+  		}
+  		if ($xml_arr['Content']=='1111') {
+  			echo "<xml>
 		  <ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
 		  <FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
 		  <CreateTime>".time()."</CreateTime>
@@ -224,8 +241,9 @@ class EventController extends Controller
 		</xml>
 				";
 	
+  		}
 
-  		// dd($xml_arr);
+  		dd($xml_arr);
 
   }
   public function label_xido(Request $request){
