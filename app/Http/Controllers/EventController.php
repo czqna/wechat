@@ -218,32 +218,34 @@ class EventController extends Controller
   		$xml_obj=simplexml_load_string($info,'SimpleXMLELement',LIBXML_NOCDATA);
   		$xml_arr=(array)$xml_obj;
   		$req=$this->wechat->get_wechat_user($xml_arr['FromUserName']);
-
-  		if ($xml_arr['MsgType']=='event' && $xml_arr['MsgType']=='MsgType') {
-  			$msg=你好.$req['nickname'].欢迎关注本公众号;
+  		// dd($req['nickname']);
+  		if ($xml_arr['MsgType']=='event' && $xml_arr['Event']=='subscribe') {
+  			$msg="你好".$req['nickname']."欢迎关注本公众号";
+  			// dd($msg);
   				echo "<xml>
-		  <ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
-		  <FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
-		  <CreateTime>".time()."</CreateTime>
-		  <MsgType><![CDATA[text]]></MsgType>
-		  <Content><![CDATA[".$msg."]]></Content>
-		</xml>
+				  <ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
+				  <FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
+				  <CreateTime>".time()."</CreateTime>
+				  <MsgType><![CDATA[text]]></MsgType>
+				  <Content><![CDATA[".$msg."]]></Content>
+				</xml>
 				";
 	
   		}
-  		if ($xml_arr['Content']=='1111') {
+  		// if ($xml_arr['Content']=='1111' && $xml_arr['MsgType']=='text') {
+  		$ms='你好';
   			echo "<xml>
 		  <ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
 		  <FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
 		  <CreateTime>".time()."</CreateTime>
 		  <MsgType><![CDATA[text]]></MsgType>
-		  <Content><![CDATA[你好]]></Content>
+		  <Content><![CDATA[".$ms."]]></Content>
 		</xml>
 				";
 	
-  		}
+  		// }
 
-  		dd($xml_arr);
+  		// dd($xml_arr);
 
   }
   public function label_xido(Request $request){
