@@ -216,13 +216,15 @@ class EventController extends Controller
   		$xml_obj=simplexml_load_string($info,'SimpleXMLELement',LIBXML_NOCDATA);
   		$xml_arr=(array)$xml_obj;
   		echo "<xml>
-		  <ToUserName><![CDATA[$xml_arr['ToUserName']]]></ToUserName>
-		  <FromUserName><![CDATA[$xml_arr['FromUserName']]]></FromUserName>
-		  <CreateTime>12345678</CreateTime>
+		  <ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
+		  <FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
+		  <CreateTime>".time()."</CreateTime>
 		  <MsgType><![CDATA[text]]></MsgType>
 		  <Content><![CDATA[你好]]></Content>
 		</xml>
 				";
+	
+
   		// dd($xml_arr);
 
   }
