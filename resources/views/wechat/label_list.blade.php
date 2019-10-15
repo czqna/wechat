@@ -23,6 +23,7 @@
 				<a href="{{url('wechat/label_del')}}?id={{$v['id']}}">删除</a>|
 				<a href="{{url('wechat/label_update')}}?id={{$v['id']}}&name={{$v['name']}}">编辑</a>
 				<a href="{{url('wechat/index')}}?id={{$v['id']}}">为用户打个标签</a>|
+				<a href="{{url('wechat/label_xido')}}?id={{$v['id']}}">根据标签为用户推送消息</a>|
 			</td>
 		</tr>
 		@endforeach

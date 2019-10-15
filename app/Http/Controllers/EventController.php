@@ -209,10 +209,53 @@ class EventController extends Controller
   }
   public function event(){
   		$info=file_get_contents("php://input");
-  		file_put_contents(storage_path('logs/wechat/'.date('Y-m-d').'.log'),"<<<<<<<<<<<<<<<<<<",FILE_APPEND);
-  		file_put_contents(storage_path('logs/wechat/'.date('Y-m-d').'.log'),$info,FILE_APPEND);
-
+  		//吧接受微信的xml数据存入日志
+  		file_put_contents(storage_path('logs/wechat/'.date('Y-m-d').'.log'),"<<<<<<<<<<<<<<<<<<\n",FILE_APPEND);
+  		file_put_contents(storage_path('logs/wechat/'.date('Y-m-d').'.log'),$info."\n",FILE_APPEND);
+  		//解析xml
+  		$xml_obj=simplexml_load_string($info,'SimpleXMLELement',LIBXML_NOCDATA);
+  		$xml_arr=(array)$xml_obj;
+  		echo "<xml>
+		  <ToUserName><![CDATA[$xml_arr['ToUserName']]]></ToUserName>
+		  <FromUserName><![CDATA[$xml_arr['FromUserName']]]></FromUserName>
+		  <CreateTime>12345678</CreateTime>
+		  <MsgType><![CDATA[text]]></MsgType>
+		  <Content><![CDATA[你好]]></Content>
+		</xml>
+				";
+  		// dd($xml_arr);
 
   }
+  public function label_xido(Request $request){
+  		$req=$request->all();
+
+  		return view('wechat.label_xido',['data'=>$req]);
+
+  }
+ 
+  //标签推送消息
+ 	public function label_xi(Request $request)
+ 	{
+ 		$req=$request->all();
+ 		// dd($req);
+ 		$url="https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token=".$this->wechat->access_token();
+ 		$data=[
+
+		   "filter"=>[
+		      "is_to_all"=>false,
+		      "tag_id"=>$req['id']
+		   ],
+		   "text"=>[
+		      "content"=>$req['content']
+		   ],
+		    "msgtype"=>"text"
+		
+ 		];
+
+ 		$d=$this->wechat->curl_post($url,json_encode($data,JSON_UNESCAPED_UNICODE));
+  		$res=json_decode($d,1);
+  		dd($res);
+ 	}
+
 
 }

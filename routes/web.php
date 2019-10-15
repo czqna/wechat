@@ -33,5 +33,10 @@ Route::get('/wechat/label_update','EventController@label_update');
 Route::post('/wechat/do_update','EventController@do_update');
 Route::post('/wechat/label_index','EventController@label_index');
 Route::get('/wechat/label_user','EventController@label_user');
+Route::post('/wechat/label_xi','EventController@label_xi');
+Route::get('/wechat/label_xido','EventController@label_xido');
+
+
+
 
 
