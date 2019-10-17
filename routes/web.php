@@ -37,6 +37,17 @@ Route::post('/wechat/label_xi','EventController@label_xi');
 Route::get('/wechat/label_xido','EventController@label_xido');
 
 
+//素材管理
+Route::get('/shucai/add','ShucaiController@add');
+Route::post('/shucai/update','ShucaiController@update');
+Route::get('/shucai/index','ShucaiController@index');
+Route::get('/shucai/menu_add','ShucaiController@menu_add');
+
+
+
+
+
+
 
 
 

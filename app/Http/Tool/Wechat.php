@@ -20,7 +20,7 @@ class Wechat{
 
  public function access_token(){
 
-   	if (Cache::has('access_token_key')) {
+   	if (!Cache::has('access_token_key')) {
    		//有的话去缓存拿
    		// dd(Cache::has('access_token_key'));
   		$access_token=Cache::get('access_token_key');
@@ -69,7 +69,7 @@ class Wechat{
         return $result;
     }
 
-
+    	//获取用用户基本信息
        public function get_wechat_user($openid)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$this->access_token().'&openid='.$openid.'&lang=zh_CN';
@@ -77,4 +77,18 @@ class Wechat{
         $result = json_decode($re,1);
         return $result;
     }
+
+        public function wechat_curl_file($url,$data)
+    {
+       $curl = curl_init($url);
+        curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,false);
+        curl_setopt($curl,CURLOPT_POST,true);
+        curl_setopt($curl,CURLOPT_POSTFIELDS,$data);
+        $result = curl_exec($curl);
+        curl_close($curl);
+        return $result;
+    }
+
 }
