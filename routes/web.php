@@ -44,10 +44,12 @@ Route::get('/shucai/index','ShucaiController@index');
 Route::get('/shucai/menu_add','ShucaiController@menu_add');
 
 
+//周考
 
-
-
-
-
+Route::get('/exam/exam_add','ExamController@exam_add');
+Route::post('/exam/exam_doadd','ExamController@exam_doadd');
+Route::get('/exam/exam_code','ExamController@exam_code');
+Route::get('/exam/exam_liu','ExamController@exam_liu');
+Route::post('/exam/exam_doliu','ExamController@exam_doliu');
 
 

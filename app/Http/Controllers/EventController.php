@@ -234,15 +234,16 @@ class EventController extends Controller
   		}
   		// if ($xml_arr['Content']=='1111' && $xml_arr['MsgType']=='text') {
       //Dtl7FXdd-M20GP86n1NXb7QAogcvM74FlfIto1IBouaQKGorPcGyb15EN4QiFfx5 
-  // 		$ms='你好';
-  // 			echo "<xml>
-		//   <ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
-		//   <FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
-		//   <CreateTime>".time()."</CreateTime>
-		//   <MsgType><![CDATA[text]]></MsgType>
-		//   <Content><![CDATA[".$ms."]]></Content>
-		// </xml>
-		// 		";
+        
+  		$ms='你好';
+  			echo "<xml>
+		  <ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
+		  <FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
+		  <CreateTime>".time()."</CreateTime>
+		  <MsgType><![CDATA[text]]></MsgType>
+		  <Content><![CDATA[".$ms."]]></Content>
+		</xml>
+				";
 	
   		// }
 

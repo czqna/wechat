@@ -20,7 +20,7 @@ class Wechat{
 
  public function access_token(){
 
-   	if (!Cache::has('access_token_key')) {
+   	if (Cache::has('access_token_key')) {
    		//有的话去缓存拿
    		// dd(Cache::has('access_token_key'));
   		$access_token=Cache::get('access_token_key');
