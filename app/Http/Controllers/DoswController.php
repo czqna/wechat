@@ -68,15 +68,14 @@ class 	DoswController extends Controller
       if ($xml_arr['MsgType']=='text' && $xml_arr['Content']=='天气') {
       		$ur=file_get_contents("http://api.k780.com/?app=weather.future&weaid=1&appkey=46237&sign=b028a01cb3d8a2b9e7c895bb5829d2b0&format=json");
       		$tian=json_decode($ur,1);
-      		// dd($tian);
+      		// dd($tian);t
+      		
+      		Cache::put('key', $ur, 7200);
       		foreach ($tian['result'] as $k => $v) {
       				// dd($v);
       			$msg=$v['days'].",".$v['citynm'].",".$v['week'].",".$v['temperature'].",".$v['weather'];
       			// dd($msg);
-      	
-
-      		}
-      			echo "<xml>
+      		echo "<xml>
 			<ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
 			<FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
 			<CreateTime>".time()."</CreateTime>
@@ -84,6 +83,8 @@ class 	DoswController extends Controller
 			<Content><![CDATA[".$msg."]]></Content>
 			</xml>
 				";
+
+      		}
 
       }
     }
