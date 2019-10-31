@@ -69,8 +69,7 @@ class 	DoswController extends Controller
       		$ur=file_get_contents("http://api.k780.com/?app=weather.future&weaid=1&appkey=46237&sign=b028a01cb3d8a2b9e7c895bb5829d2b0&format=json");
       		$tian=json_decode($ur,1);
       		// dd($tian);
-      		foreach ($tian['result'] as $k => $v) {
-      				// dd($v);
+      		
       			$msg=$v['days'].",".$v['citynm'].",".$v['week'].",".$v['temperature'].",".$v['weather'];
       			// dd($msg);
       		echo "<xml>
@@ -82,8 +81,8 @@ class 	DoswController extends Controller
 			</xml>
 				";
 
-      		}
-      		
+      	
+
       }
     }
     public function get_wechat_user($openid)
