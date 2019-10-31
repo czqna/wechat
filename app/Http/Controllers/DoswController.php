@@ -22,39 +22,39 @@ class 	DoswController extends Controller
       $xml_obj=simplexml_load_string($info,'SimpleXMLELement',LIBXML_NOCDATA);
       $xml_arr=(array)$xml_obj;
       $req=$this->get_wechat_user($xml_arr['FromUserName']);
-      // dd($req);
-      if ($xml_arr['MsgType']=='event' && $xml_arr['Event']=='subscribe') {
-      $data = DB::table('dodo')->where(['openid'=>$req['openid']])->first();
-      	// dd($data);
-    	if (empty($data)) {
-    		$data=[
-    			'openid'=>$req['openid'],
-    			'name'=>$req['nickname']
-    		];
-    		$re=DB::table('dodo')->insert($data);
-    		    $msg=$msg="你好".$req['nickname']."欢迎关注本公众号";
-      		echo "<xml>
-			<ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
-			<FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
-			<CreateTime>".time()."</CreateTime>
-			<MsgType><![CDATA[text]]></MsgType>
-			<Content><![CDATA[".$msg."]]></Content>
-			</xml>
-				";
-    	}else{
-    			$msg=$msg="你好".$req['nickname']."欢迎回到本公众号";
-      		echo "<xml>
-			<ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
-			<FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
-			<CreateTime>".time()."</CreateTime>
-			<MsgType><![CDATA[text]]></MsgType>
-			<Content><![CDATA[".$msg."]]></Content>
-			</xml>
-				";
+   //    // dd($req);
+   //    if ($xml_arr['MsgType']=='event' && $xml_arr['Event']=='subscribe') {
+   //    $user = DB::table('users')->where('name', 'John')->first();
+   //    	dd($data);
+   //  	if ($data['openid']==$req['openid']) {
+   //  		$data=[
+   //  			'openid'=>$req['openid'],
+   //  			'name'=>$req['nickname']
+   //  		];
+   //  		$re=DB::table('dodo')->insert($data);
+   //  		    $msg=$msg="你好".$req['nickname']."欢迎关注本公众号";
+   //    		echo "<xml>
+			// <ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
+			// <FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
+			// <CreateTime>".time()."</CreateTime>
+			// <MsgType><![CDATA[text]]></MsgType>
+			// <Content><![CDATA[".$msg."]]></Content>
+			// </xml>
+			// 	";
+   //  	}else{
+   //  			$msg=$msg="你好".$req['nickname']."欢迎回到本公众号";
+   //    		echo "<xml>
+			// <ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
+			// <FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
+			// <CreateTime>".time()."</CreateTime>
+			// <MsgType><![CDATA[text]]></MsgType>
+			// <Content><![CDATA[".$msg."]]></Content>
+			// </xml>
+			// 	";
 	
-    	}
+   //  	}
 
-      }
+   //    }
       if ($xml_arr['MsgType']=='text' && $xml_arr['Content']=='图文') {
       			$msg=$msg="你好".$req['nickname']."我能收到你发的消息";
       		echo "<xml>
