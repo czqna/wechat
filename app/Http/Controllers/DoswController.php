@@ -24,14 +24,15 @@ class 	DoswController extends Controller
       $req=$this->get_wechat_user($xml_arr['FromUserName']);
       // dd($req);
       if ($xml_arr['MsgType']=='event' && $xml_arr['Event']=='subscribe') {
-      	$data=DB::table('dodo')->get();
-    	if ($data) {
+      $data = DB::table('dodo')->where(['openid'=>$req['openid']])->first();
+      	// dd($data);
+    	if (empty($data)) {
     		$data=[
     			'openid'=>$req['openid'],
     			'name'=>$req['nickname']
     		];
     		$re=DB::table('dodo')->insert($data);
-    		     $msg=$msg="你好".$req['nickname']."欢迎关注本公众号";
+    		    $msg=$msg="你好".$req['nickname']."欢迎关注本公众号";
       		echo "<xml>
 			<ToUserName><![CDATA[".$xml_arr['FromUserName']."]]></ToUserName>
 			<FromUserName><![CDATA[".$xml_arr['ToUserName']."]]></FromUserName>
