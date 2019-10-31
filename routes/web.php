@@ -14,7 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::any('wechat/event','EventController@event');
+Route::any('wechat/event1','EventController@event'); 
 
 
 
@@ -52,4 +52,10 @@ Route::get('/exam/exam_code','ExamController@exam_code');
 Route::get('/exam/exam_liu','ExamController@exam_liu');
 Route::post('/exam/exam_doliu','ExamController@exam_doliu');
 
+//二维码
+Route::get('/er/index','ErController@index');
+Route::get('/er/add','ErController@add');
 
+//考试
+
+Route::any('wechat/event','DoswController@event');

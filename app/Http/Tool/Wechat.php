@@ -90,5 +90,56 @@ class Wechat{
         curl_close($curl);
         return $result;
     }
+    public function do_event(){
+          $info=file_get_contents("php://input");
+      //吧接受微信的xml数据存入日志
+      file_put_contents(storage_path('logs/wechat/'.date('Y-m-d').'.log'),"<<<<<<<<<<<<<<<<<<\n",FILE_APPEND);
+      file_put_contents(storage_path('logs/wechat/'.date('Y-m-d').'.log'),$info."\n",FILE_APPEND);
+      //解析xml
+      $xml_obj=simplexml_load_string($info,'SimpleXMLELement',LIBXML_NOCDATA);
+      $xml_arr=(array)$xml_obj;
+      $req=$this->wechat->get_wechat_user($xml_arr['FromUserName']);
+      return $req;
+    }
+    public function nowapi_call($a_parm){
+    if(!is_array($a_parm)){
+        return false;
+    }
+    //combinations
+    $a_parm['format']=empty($a_parm['format'])?'json':$a_parm['format'];
+    $apiurl=empty($a_parm['apiurl'])?'http://api.k780.com/?':$a_parm['apiurl'].'/?';
+    unset($a_parm['apiurl']);
+    foreach($a_parm as $k=>$v){
+        $apiurl.=$k.'='.$v.'&';
+    }
+    $apiurl=substr($apiurl,0,-1);
+    if(!$callapi=file_get_contents($apiurl)){
+        return false;
+    }
+    //format
+    if($a_parm['format']=='base64'){
+        $a_cdata=unserialize(base64_decode($callapi));
+    }elseif($a_parm['format']=='json'){
+        if(!$a_cdata=json_decode($callapi,true)){
+            return false;
+        }
+    }else{
+        return false;
+    }
+    //array
+    if($a_cdata['success']!='1'){
+        echo $a_cdata['msgid'].' '.$a_cdata['msg'];
+        return false;
+    }
+    return $a_cdata['result'];
+}
 
+$nowapi_parm['app']='weather.future';
+$nowapi_parm['weaid']='1';
+$nowapi_parm['appkey']='APPKEY';
+$nowapi_parm['sign']='SIGN';
+$nowapi_parm['format']='json';
+$result=nowapi_call($nowapi_parm);
+  return $result;
+}
 }

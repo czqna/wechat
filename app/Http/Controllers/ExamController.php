@@ -23,6 +23,8 @@ class examController extends Controller
  	}
  	public function exam_code(Request $request){
  		$data=$request->all();
+ 		// $session=$request->session()->put('key',$data['code']);
+ 		
  		$access_token=$this->wechat->access_token();
  		if (empty($data['code'])) {
  			dd('请先授权');
